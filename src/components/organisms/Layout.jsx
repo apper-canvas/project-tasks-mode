@@ -37,7 +37,7 @@ const Layout = () => {
     setEditingTask(null)
   }
 
-  const handleSaveTask = async (taskData) => {
+const handleSaveTask = async (taskData) => {
     try {
       if (editingTask) {
         const updatedTask = await taskService.update(editingTask.Id, taskData)
@@ -49,12 +49,12 @@ const Layout = () => {
           taskData.ProjectId = currentProjectId
         }
         const newTask = await taskService.create(taskData)
-const newTask = await taskService.create(taskData)
         setTasks(prev => [...prev, newTask])
         toast.success("Task created successfully!")
       }
       setIsTaskModalOpen(false)
       setEditingTask(null)
+    } catch (error) {
       console.error('Error saving task:', error)
       toast.error('Failed to save task')
     }
