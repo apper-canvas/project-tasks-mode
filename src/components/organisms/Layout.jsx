@@ -280,21 +280,9 @@ onCreateProject={handleCreateProject}
             </div>
           </div>
         </div>
+</div>
 
-        {/* Task Creation Section */}
-        {currentProject && (
-          <div className="bg-slate-50 border-b border-slate-200">
-            <div className="container mx-auto px-8 py-4 max-w-7xl">
-              <QuickTaskInput
-                onAddTask={handleQuickAddTask}
-                projectId={currentProject.Id}
-                placeholder={`Add a task to ${currentProject.Name}...`}
-              />
-            </div>
-          </div>
-        )}
-
-{/* Page Content */}
+        <div className="flex-1 overflow-auto">
 <div className="flex-1 overflow-auto">
           <main className="container mx-auto px-4 py-6 lg:px-8 lg:py-8 max-w-7xl">
             <Outlet context={{ 
