@@ -207,48 +207,54 @@ onCreateProject={handleCreateProject}
         </div>
 
         {/* Desktop Header */}
-        <div className="hidden lg:block bg-white border-b border-slate-200">
-          <div className="container mx-auto px-8 py-4 max-w-7xl">
+<div className="hidden lg:block bg-white border-b border-slate-200 shadow-sm">
+          <div className="container mx-auto px-8 py-5 max-w-7xl">
             <div className="flex items-center justify-between">
-              {/* Project Info or App Title */}
-              <div className="flex items-center space-x-4">
+              {/* Project Info Section */}
+              <div className="flex items-center space-x-4 flex-1 min-w-0">
                 {currentProject ? (
-                  <div>
-                    <h1 className="text-xl font-bold text-slate-900">{currentProject.Name}</h1>
-                    {currentProject.Description && (
-                      <p className="text-sm text-slate-600 mt-1">{truncateText(currentProject.Description, 60)}</p>
-                    )}
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <ApperIcon name="FolderOpen" size={24} className="text-primary-600" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h1 className="text-2xl font-bold text-slate-900 truncate">{currentProject.Name}</h1>
+                      {currentProject.Description && (
+                        <p className="text-sm text-slate-600 mt-1 line-clamp-1">{truncateText(currentProject.Description, 80)}</p>
+                      )}
+                    </div>
                   </div>
                 ) : (
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-lg flex items-center justify-center">
-                      <ApperIcon name="CheckSquare" size={20} className="text-primary-600" />
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex items-center justify-center">
+                      <ApperIcon name="CheckSquare" size={24} className="text-primary-600" />
                     </div>
                     <div>
-                      <h1 className="text-xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                      <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
                         Project Tasks
                       </h1>
-                      <p className="text-sm text-slate-500">Manage your projects and tasks</p>
+                      <p className="text-sm text-slate-500 mt-1">Manage your projects and tasks</p>
                     </div>
                   </div>
                 )}
               </div>
 
               {/* Search and Actions */}
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-4 ml-8">
                 <div className="w-80">
                   <SearchBar 
                     onSearch={handleSearch}
                     placeholder="Search tasks..."
+                    className="h-11"
                   />
                 </div>
                 
                 <Button
                   variant="primary"
                   onClick={handleCreateTask}
-                  className="h-10 px-4"
+                  className="h-11 px-5 font-medium shadow-sm hover:shadow-md transition-all duration-200"
                 >
-                  <ApperIcon name="Plus" size={16} className="mr-2" />
+                  <ApperIcon name="Plus" size={18} className="mr-2" />
                   Add Task
                 </Button>
               </div>
