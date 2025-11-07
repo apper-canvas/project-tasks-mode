@@ -137,6 +137,8 @@ onCreateProject={handleCreateProject}
           </main>
 </div>
       </div>
-    </div>
+</div>
   )
 }
+
+export default Layout
