@@ -156,7 +156,7 @@ onCreateProject={handleCreateProject}
 {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile Header */}
-        <div className="lg:hidden bg-white border-b border-slate-200 p-4">
+<div className="lg:hidden bg-white border-b border-slate-200 p-4">
           <div className="flex items-center justify-between mb-3">
             <Button
               variant="ghost"
@@ -166,33 +166,16 @@ onCreateProject={handleCreateProject}
               <ApperIcon name="Menu" size={20} />
             </Button>
             
-            <div className="flex items-center space-x-2 flex-1 mx-3">
-              {currentProject ? (
-                <div className="text-center">
-                  <h1 className="font-bold text-slate-900 text-sm">{currentProject.Name}</h1>
-                  {currentProject.Description && (
-                    <p className="text-xs text-slate-500">{truncateText(currentProject.Description, 25)}</p>
-                  )}
-                </div>
-              ) : (
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-lg flex items-center justify-center">
-                    <ApperIcon name="CheckSquare" size={16} className="text-primary-600" />
-                  </div>
-                  <h1 className="font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                    Project Tasks
-                  </h1>
-                </div>
-              )}
-            </div>
+            <div className="flex-1"></div>
             
             <Button
               variant="primary"
               size="sm"
               onClick={handleCreateTask}
-              className="h-8"
+              className="h-8 px-3"
             >
-              <ApperIcon name="Plus" size={14} />
+              <ApperIcon name="Plus" size={14} className="mr-1" />
+              <span className="text-xs">Add Task</span>
             </Button>
           </div>
           
@@ -211,32 +194,18 @@ onCreateProject={handleCreateProject}
           <div className="container mx-auto px-8 py-5 max-w-7xl">
             <div className="flex items-center justify-between">
               {/* Project Info Section */}
-              <div className="flex items-center space-x-4 flex-1 min-w-0">
-                {currentProject ? (
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <ApperIcon name="FolderOpen" size={24} className="text-primary-600" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <h1 className="text-2xl font-bold text-slate-900 truncate">{currentProject.Name}</h1>
-                      {currentProject.Description && (
-                        <p className="text-sm text-slate-600 mt-1 line-clamp-1">{truncateText(currentProject.Description, 80)}</p>
-                      )}
-                    </div>
+<div className="flex items-center space-x-4 flex-1 min-w-0">
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex items-center justify-center">
+                    <ApperIcon name="CheckSquare" size={24} className="text-primary-600" />
                   </div>
-                ) : (
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex items-center justify-center">
-                      <ApperIcon name="CheckSquare" size={24} className="text-primary-600" />
-                    </div>
-                    <div>
-                      <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                        Project Tasks
-                      </h1>
-                      <p className="text-sm text-slate-500 mt-1">Manage your projects and tasks</p>
-                    </div>
+                  <div>
+                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                      Task Management
+                    </h1>
+                    <p className="text-sm text-slate-500 mt-1">Organize and track your tasks</p>
                   </div>
-                )}
+                </div>
               </div>
 
               {/* Search and Actions */}
