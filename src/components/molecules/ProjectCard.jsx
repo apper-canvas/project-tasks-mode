@@ -16,16 +16,16 @@ const ProjectCard = ({ project, taskCounts = { active: 0, total: 0 } }) => {
         whileTap={{ scale: 0.98 }}
         transition={{ type: "spring", stiffness: 400, damping: 25 }}
       >
-        <Card 
+<Card 
           interactive
-          className="p-6 border-l-4 hover:shadow-xl transition-all duration-300"
+          className="p-4 border-l-4 hover:shadow-lg transition-all duration-300"
           style={{ borderLeftColor: project.color }}
         >
-          <div className="space-y-4">
+<div className="space-y-3">
             {/* Header */}
-            <div className="flex items-start justify-between">
+            <div className="flex items-center justify-between">
               <div className="flex-1 min-w-0">
-                <h3 className="text-lg font-semibold text-slate-900 truncate">
+                <h3 className="text-base font-semibold text-slate-900 truncate">
                   {project.name}
                 </h3>
               </div>
@@ -33,37 +33,33 @@ const ProjectCard = ({ project, taskCounts = { active: 0, total: 0 } }) => {
               <div className="flex items-center space-x-2">
                 {active > 0 && (
                   <Badge variant="primary" size="sm">
-                    {active} active
+                    {active}
                   </Badge>
                 )}
-                <ApperIcon name="ChevronRight" size={16} className="text-slate-400" />
+                <ApperIcon name="ChevronRight" size={14} className="text-slate-400" />
               </div>
             </div>
 
             {/* Stats */}
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <ApperIcon name="CheckSquare" size={16} className="text-slate-500" />
-                  <span className="text-sm text-slate-600">{total} tasks</span>
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-1">
+                  <ApperIcon name="CheckSquare" size={14} className="text-slate-500" />
+                  <span className="text-xs text-slate-600">{total}</span>
                 </div>
                 
                 {total > 0 && (
-                  <div className="flex items-center space-x-2">
-                    <ApperIcon name="TrendingUp" size={16} className="text-green-500" />
-                    <span className="text-sm text-green-600 font-medium">
-                      {completedPercentage}% complete
-                    </span>
-                  </div>
+                  <span className="text-xs text-green-600 font-medium">
+                    {completedPercentage}%
+                  </span>
                 )}
               </div>
               
               <div 
-                className="w-3 h-3 rounded-full shadow-sm"
+                className="w-2 h-2 rounded-full shadow-sm"
                 style={{ backgroundColor: project.color }}
               />
             </div>
-
 {/* Progress Bar */}
             {total > 0 && (
               <div className="space-y-1">

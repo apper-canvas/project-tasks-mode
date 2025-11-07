@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, useLocation, useParams } from "react-router-dom";
+import { Outlet, useLocation, useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { projectService } from "@/services/api/projectService";
 import { taskService } from "@/services/api/taskService";
@@ -8,11 +8,13 @@ import Button from "@/components/atoms/Button";
 import Sidebar from "@/components/organisms/Sidebar";
 import TaskModal from "@/components/organisms/TaskModal";
 import MobileSidebar from "@/components/organisms/MobileSidebar";
+import QuickTaskInput from "@/components/molecules/QuickTaskInput";
 import SearchBar from "@/components/molecules/SearchBar";
 import Loading from "@/components/ui/Loading";
 const Layout = () => {
   const location = useLocation()
   const params = useParams()
+  const navigate = useNavigate()
   const [projects, setProjects] = useState([])
   const [tasks, setTasks] = useState([])
   const [taskCounts, setTaskCounts] = useState({})
@@ -24,8 +26,15 @@ const Layout = () => {
   const [searchQuery, setSearchQuery] = useState("")
 
   // Get current project for header display
-  const currentProjectId = params.projectId ? parseInt(params.projectId) : null
+const currentProjectId = params.projectId ? parseInt(params.projectId) : (projects.length > 0 ? projects[0].Id : null)
   const currentProject = currentProjectId ? projects.find(p => p.Id === currentProjectId) : null
+
+  // Auto-redirect to first project if no project selected and projects exist
+  useEffect(() => {
+    if (!params.projectId && projects.length > 0) {
+      navigate(`/projects/${projects[0].Id}`, { replace: true })
+    }
+  }, [params.projectId, projects, navigate])
 
   const handleCreateTask = () => {
     setEditingTask(null)
@@ -120,7 +129,28 @@ const newProject = await projectService.create(projectData)
       toast.error("Failed to create project")
       console.error("Error creating project:", err)
     }
-  }
+}
+
+  const handleQuickAddTask = async (taskText) => {
+    if (!taskText.trim()) return;
+    
+    try {
+      const taskData = {
+        Title: taskText.trim(),
+        Description: '',
+        Status: 'pending',
+        Priority: 'medium',
+        ProjectId: currentProjectId
+      };
+      
+      const newTask = await taskService.create(taskData);
+      setTasks(prev => [...prev, newTask]);
+      toast.success("Task added successfully!");
+    } catch (error) {
+      console.error('Error creating quick task:', error);
+      toast.error('Failed to create task');
+    }
+  };
 
   if (loading) {
     return (
@@ -134,7 +164,7 @@ const newProject = await projectService.create(projectData)
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50 flex">
+<div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50 flex">
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">
         <Sidebar
@@ -154,7 +184,7 @@ onCreateProject={handleCreateProject}
       />
 
 {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0">
+<div className="flex-1 flex flex-col min-w-0">
         {/* Mobile Header */}
         <div className="lg:hidden bg-white border-b border-slate-200 p-4">
           <div className="flex items-center justify-between mb-3">
@@ -166,27 +196,16 @@ onCreateProject={handleCreateProject}
               <ApperIcon name="Menu" size={20} />
             </Button>
             
-            <div className="flex items-center space-x-2 flex-1 mx-3">
-              {currentProject ? (
-                <div className="text-center">
-                  <h1 className="font-bold text-slate-900 text-sm">{currentProject.Name}</h1>
-                  {currentProject.Description && (
-                    <p className="text-xs text-slate-500">{truncateText(currentProject.Description, 25)}</p>
-                  )}
-                </div>
-              ) : (
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-lg flex items-center justify-center">
-                    <ApperIcon name="CheckSquare" size={16} className="text-primary-600" />
-                  </div>
-                  <h1 className="font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                    Project Tasks
-                  </h1>
-                </div>
-              )}
+<div className="flex items-center space-x-2 flex-1 mx-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-lg flex items-center justify-center">
+                <ApperIcon name="CheckSquare" size={16} className="text-primary-600" />
+              </div>
+              <h1 className="font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                Project Tasks
+              </h1>
             </div>
             
-            <Button
+<Button
               variant="primary"
               size="sm"
               onClick={handleCreateTask}
@@ -231,7 +250,7 @@ onCreateProject={handleCreateProject}
                     </div>
                     <div>
                       <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                        Project Tasks
+                        All Projects
                       </h1>
                       <p className="text-sm text-slate-500 mt-1">Manage your projects and tasks</p>
                     </div>
@@ -262,8 +281,21 @@ onCreateProject={handleCreateProject}
           </div>
         </div>
 
+        {/* Task Creation Section */}
+        {currentProject && (
+          <div className="bg-slate-50 border-b border-slate-200">
+            <div className="container mx-auto px-8 py-4 max-w-7xl">
+              <QuickTaskInput
+                onAddTask={handleQuickAddTask}
+                projectId={currentProject.Id}
+                placeholder={`Add a task to ${currentProject.Name}...`}
+              />
+            </div>
+          </div>
+        )}
+
 {/* Page Content */}
-        <div className="flex-1 overflow-auto">
+<div className="flex-1 overflow-auto">
           <main className="container mx-auto px-4 py-6 lg:px-8 lg:py-8 max-w-7xl">
             <Outlet context={{ 
               projects, 
