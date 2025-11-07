@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, useLocation, useParams, NavLink } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { projectService } from "@/services/api/projectService";
 import { taskService } from "@/services/api/taskService";
@@ -153,7 +153,7 @@ const newProject = await projectService.create(projectData)
 onCreateProject={handleCreateProject}
       />
 
-      {/* Main Content */}
+{/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile Header */}
 <div className="lg:hidden bg-white border-b border-slate-200 p-4">
@@ -194,30 +194,20 @@ onCreateProject={handleCreateProject}
           <div className="container mx-auto px-8 py-5 max-w-7xl">
             <div className="flex items-center justify-between">
               {/* Project Info Section */}
-              <div className="flex items-center justify-between flex-1 min-w-0">
+<div className="flex items-center space-x-4 flex-1 min-w-0">
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex items-center justify-center">
                     <ApperIcon name="CheckSquare" size={24} className="text-primary-600" />
                   </div>
                   <div>
                     <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                      {currentProject ? currentProject.name : 'Task Management'}
+                      Task Management
                     </h1>
-                    <p className="text-sm text-slate-500 mt-1">
-                      {currentProject ? 'Project Tasks & Management' : 'Organize and track your tasks'}
-                    </p>
+                    <p className="text-sm text-slate-500 mt-1">Organize and track your tasks</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <NavLink 
-                    to="/tasks"
-                    className="px-4 py-2 bg-primary-50 hover:bg-primary-100 text-primary-700 rounded-lg font-medium transition-colors duration-200 flex items-center space-x-2"
-                  >
-                    <ApperIcon name="List" size={16} />
-                    <span className="hidden sm:inline">All Tasks</span>
-                  </NavLink>
-</div>
               </div>
+
               {/* Search and Actions */}
               <div className="flex items-center space-x-4 ml-8">
                 <div className="w-80">
