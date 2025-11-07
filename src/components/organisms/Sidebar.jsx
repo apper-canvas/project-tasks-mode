@@ -31,7 +31,7 @@ const Sidebar = ({ projects = [], taskCounts = {}, onCreateProject }) => {
   ]
 
   return (
-<div className="w-72 bg-white border-r border-slate-200 flex flex-col h-full">
+    <div className="w-80 bg-white border-r border-slate-200 flex flex-col h-full">
       {/* Header */}
       <div className="p-6 border-b border-slate-100">
         <div className="flex items-center justify-between">
@@ -89,7 +89,7 @@ const Sidebar = ({ projects = [], taskCounts = {}, onCreateProject }) => {
             </Button>
           </div>
 
-<div className="space-y-2">
+<div className="space-y-3">
             {projects.map((project) => {
               const counts = taskCounts[project.Id] || { active: 0, total: 0 }
               const isActive = location.pathname === `/project/${project.Id}`
@@ -100,7 +100,7 @@ const Sidebar = ({ projects = [], taskCounts = {}, onCreateProject }) => {
                   to={`/project/${project.Id}`}
                   className="block"
                 >
-<ProjectCard 
+                  <ProjectCard 
                     project={project} 
                     taskCounts={counts} 
                     isSelected={isActive}

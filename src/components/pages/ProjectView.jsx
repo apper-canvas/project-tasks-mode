@@ -190,31 +190,51 @@ const ProjectView = () => {
 
   return (
     <div className="space-y-8">
-{/* Project Stats */}
+      {/* Project Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="space-y-6"
       >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Badge variant="primary">
-              {activeTasks} active tasks
-            </Badge>
-            {totalTasks > 0 && (
-              <Badge variant="success">
-                {completionRate}% complete
+        <div className="flex items-start justify-between">
+          <div className="space-y-3">
+            <div className="flex items-center space-x-3">
+              <div 
+                className="w-6 h-6 rounded-lg"
+                style={{ backgroundColor: project.color }}
+              />
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+                {project.name}
+              </h1>
+            </div>
+            <div className="flex items-center space-x-4">
+              <Badge variant="primary">
+                {activeTasks} active tasks
               </Badge>
-            )}
+              {totalTasks > 0 && (
+                <Badge variant="success">
+                  {completionRate}% complete
+                </Badge>
+              )}
+            </div>
           </div>
           
-          <Button
-            variant="ghost"
-            onClick={handleDeleteProject}
-            className="text-red-600 hover:text-red-700 hover:bg-red-50"
-          >
-            <ApperIcon name="Trash2" size={16} />
-          </Button>
+          <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              onClick={handleDeleteProject}
+              className="text-red-600 hover:text-red-700 hover:bg-red-50"
+            >
+              <ApperIcon name="Trash2" size={16} />
+            </Button>
+            <Button
+              onClick={handleCreateTask}
+              className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600"
+            >
+              <ApperIcon name="Plus" size={16} className="mr-2" />
+              Add Task
+            </Button>
+          </div>
         </div>
 
         {/* Stats Cards */}
@@ -266,7 +286,12 @@ const ProjectView = () => {
         </div>
       </motion.div>
 
-{/* Task creation is now handled in Layout header */}
+      {/* Quick Add Task */}
+      <QuickTaskInput
+        onAddTask={handleQuickAddTask}
+        projectId={project.Id}
+        placeholder={`Add a task to ${project.name}...`}
+      />
 
       {/* Task List */}
       {projectTasks.length === 0 ? (
