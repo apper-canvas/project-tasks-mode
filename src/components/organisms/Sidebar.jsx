@@ -1,10 +1,11 @@
-import { useState } from "react"
-import { NavLink, useLocation } from "react-router-dom"
-import { motion, AnimatePresence } from "framer-motion"
-import { toast } from "react-toastify"
-import ApperIcon from "@/components/ApperIcon"
-import Button from "@/components/atoms/Button"
-import { projectService } from "@/services/api/projectService"
+import React, { useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import { toast } from "react-toastify";
+import { projectService } from "@/services/api/projectService";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import ProjectCard from "@/components/molecules/ProjectCard";
 
 const Sidebar = ({ projects = [], taskCounts = {}, onCreateProject }) => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
@@ -88,7 +89,7 @@ const Sidebar = ({ projects = [], taskCounts = {}, onCreateProject }) => {
             </Button>
           </div>
 
-          <div className="space-y-1">
+<div className="space-y-3">
             {projects.map((project) => {
               const counts = taskCounts[project.Id] || { active: 0, total: 0 }
               const isActive = location.pathname === `/project/${project.Id}`
@@ -97,27 +98,14 @@ const Sidebar = ({ projects = [], taskCounts = {}, onCreateProject }) => {
                 <NavLink
                   key={project.Id}
                   to={`/project/${project.Id}`}
-                  className={`flex items-center justify-between px-3 py-2.5 rounded-lg text-sm transition-all duration-200 border-l-4 ${
-                    isActive
-                      ? 'bg-gradient-to-r from-primary-50 to-secondary-50 text-primary-700'
-                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border-transparent'
-                  }`}
-                  style={{ 
-                    borderLeftColor: isActive ? project.color : 'transparent'
-                  }}
+                  className="block"
                 >
-                  <div className="flex items-center space-x-3 flex-1 min-w-0">
-                    <div 
-                      className="w-3 h-3 rounded-full flex-shrink-0"
-                      style={{ backgroundColor: project.color }}
-                    />
-                    <span className="truncate font-medium">{project.name}</span>
-                  </div>
-                  {counts.active > 0 && (
-                    <span className="bg-slate-200 text-slate-700 text-xs px-2 py-1 rounded-full flex-shrink-0">
-                      {counts.active}
-                    </span>
-                  )}
+                  <ProjectCard 
+                    project={project} 
+                    taskCounts={counts} 
+                    isSelected={isActive}
+                    compact={true}
+                  />
                 </NavLink>
               )
             })}

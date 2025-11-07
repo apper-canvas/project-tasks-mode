@@ -1,8 +1,9 @@
-import { motion } from "framer-motion"
-import { Link } from "react-router-dom"
-import Card from "@/components/atoms/Card"
-import Badge from "@/components/atoms/Badge"
-import ApperIcon from "@/components/ApperIcon"
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import React from "react";
+import ApperIcon from "@/components/ApperIcon";
+import Card from "@/components/atoms/Card";
+import Badge from "@/components/atoms/Badge";
 
 const ProjectCard = ({ project, taskCounts = { active: 0, total: 0 } }) => {
   const { active, total } = taskCounts
@@ -63,7 +64,7 @@ const ProjectCard = ({ project, taskCounts = { active: 0, total: 0 } }) => {
               />
             </div>
 
-            {/* Progress Bar */}
+{/* Progress Bar */}
             {total > 0 && (
               <div className="space-y-1">
                 <div className="w-full bg-slate-200 rounded-full h-2">
