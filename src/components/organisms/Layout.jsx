@@ -153,7 +153,7 @@ const newProject = await projectService.create(projectData)
 onCreateProject={handleCreateProject}
       />
 
-{/* Main Content */}
+      {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile Header */}
 <div className="lg:hidden bg-white border-b border-slate-200 p-4">
@@ -194,7 +194,7 @@ onCreateProject={handleCreateProject}
           <div className="container mx-auto px-8 py-5 max-w-7xl">
             <div className="flex items-center justify-between">
               {/* Project Info Section */}
-<div className="flex items-center justify-between flex-1 min-w-0">
+              <div className="flex items-center justify-between flex-1 min-w-0">
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex items-center justify-center">
                     <ApperIcon name="CheckSquare" size={24} className="text-primary-600" />
@@ -216,10 +216,8 @@ onCreateProject={handleCreateProject}
                     <ApperIcon name="List" size={16} />
                     <span className="hidden sm:inline">All Tasks</span>
                   </NavLink>
-                </div>
-                </div>
+</div>
               </div>
-
               {/* Search and Actions */}
               <div className="flex items-center space-x-4 ml-8">
                 <div className="w-80">
