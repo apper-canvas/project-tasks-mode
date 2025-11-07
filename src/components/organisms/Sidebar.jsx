@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { NavLink, useLocation } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
+import { toast } from "react-toastify"
 import ApperIcon from "@/components/ApperIcon"
 import Button from "@/components/atoms/Button"
+import { projectService } from "@/services/api/projectService"
 
 const Sidebar = ({ projects = [], taskCounts = {}, onCreateProject }) => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
@@ -158,6 +160,7 @@ const Sidebar = ({ projects = [], taskCounts = {}, onCreateProject }) => {
 const CreateProjectModal = ({ isOpen, onClose, onCreateProject }) => {
   const [name, setName] = useState("")
   const [selectedColor, setSelectedColor] = useState("#6366f1")
+  const [isSubmitting, setIsSubmitting] = useState(false)
   
   const colorOptions = [
     "#6366f1", "#8b5cf6", "#10b981", "#f59e0b", 
@@ -165,16 +168,26 @@ const CreateProjectModal = ({ isOpen, onClose, onCreateProject }) => {
     "#06b6d4", "#ec4899", "#64748b", "#7c3aed"
   ]
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    if (name.trim()) {
-      onCreateProject({
-        name: name.trim(),
-        color: selectedColor
-      })
-      setName("")
-      setSelectedColor("#6366f1")
-      onClose()
+    if (name.trim() && !isSubmitting) {
+      setIsSubmitting(true)
+      try {
+        const newProject = await projectService.create({
+          name: name.trim(),
+          color: selectedColor
+        })
+        onCreateProject(newProject)
+        toast.success(`Project "${newProject.name}" created successfully`)
+        setName("")
+        setSelectedColor("#6366f1")
+        onClose()
+      } catch (error) {
+        toast.error("Failed to create project. Please try again.")
+        console.error("Error creating project:", error)
+      } finally {
+        setIsSubmitting(false)
+      }
     }
   }
 
@@ -190,7 +203,7 @@ const CreateProjectModal = ({ isOpen, onClose, onCreateProject }) => {
       >
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-semibold text-slate-900">Create New Project</h2>
-          <Button variant="ghost" size="sm" onClick={onClose}>
+          <Button variant="ghost" size="sm" onClick={onClose} disabled={isSubmitting}>
             <ApperIcon name="X" size={18} />
           </Button>
         </div>
@@ -205,8 +218,9 @@ const CreateProjectModal = ({ isOpen, onClose, onCreateProject }) => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter project name"
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:opacity-50"
               autoFocus
+              disabled={isSubmitting}
             />
           </div>
 
@@ -220,7 +234,8 @@ const CreateProjectModal = ({ isOpen, onClose, onCreateProject }) => {
                   key={color}
                   type="button"
                   onClick={() => setSelectedColor(color)}
-                  className={`w-8 h-8 rounded-full transition-all duration-200 ${
+                  disabled={isSubmitting}
+                  className={`w-8 h-8 rounded-full transition-all duration-200 disabled:opacity-50 ${
                     selectedColor === color 
                       ? 'ring-2 ring-offset-2 ring-slate-400 scale-110' 
                       : 'hover:scale-105'
@@ -232,12 +247,16 @@ const CreateProjectModal = ({ isOpen, onClose, onCreateProject }) => {
           </div>
 
           <div className="flex justify-end gap-3 pt-4">
-            <Button type="button" variant="secondary" onClick={onClose}>
+            <Button type="button" variant="secondary" onClick={onClose} disabled={isSubmitting}>
               Cancel
             </Button>
-            <Button type="submit" disabled={!name.trim()}>
-              <ApperIcon name="Plus" size={16} className="mr-2" />
-              Create Project
+            <Button type="submit" disabled={!name.trim() || isSubmitting}>
+              {isSubmitting ? (
+                <ApperIcon name="Loader2" size={16} className="mr-2 animate-spin" />
+              ) : (
+                <ApperIcon name="Plus" size={16} className="mr-2" />
+              )}
+              {isSubmitting ? "Creating..." : "Create Project"}
             </Button>
           </div>
         </form>

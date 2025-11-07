@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { NavLink, useLocation } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import ApperIcon from "@/components/ApperIcon"
@@ -10,6 +11,7 @@ const MobileSidebar = ({
   taskCounts = {},
   onCreateProject 
 }) => {
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const location = useLocation()
   
   const navigationItems = [
@@ -104,13 +106,10 @@ const MobileSidebar = ({
               <div className="px-4 py-2">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-sm font-semibold text-slate-900">Projects</h3>
-                  <Button
+<Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => {
-                      onCreateProject()
-                      onClose()
-                    }}
+                    onClick={() => setIsCreateModalOpen(true)}
                     className="h-8 w-8 p-0"
                   >
                     <ApperIcon name="Plus" size={16} />
@@ -158,13 +157,10 @@ const MobileSidebar = ({
                         <ApperIcon name="FolderPlus" size={24} className="text-slate-400" />
                       </div>
                       <p className="text-sm text-slate-500 mb-3">No projects yet</p>
-                      <Button
+<Button
                         variant="primary"
                         size="sm"
-                        onClick={() => {
-                          onCreateProject()
-                          onClose()
-                        }}
+                        onClick={() => setIsCreateModalOpen(true)}
                       >
                         <ApperIcon name="Plus" size={14} className="mr-1" />
                         Create Project

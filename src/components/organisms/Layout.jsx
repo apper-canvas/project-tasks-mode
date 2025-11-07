@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react"
-import { Outlet } from "react-router-dom"
-import { toast } from "react-toastify"
-import Sidebar from "@/components/organisms/Sidebar"
-import MobileSidebar from "@/components/organisms/MobileSidebar"
-import Button from "@/components/atoms/Button"
-import ApperIcon from "@/components/ApperIcon"
-import { projectService } from "@/services/api/projectService"
-import { taskService } from "@/services/api/taskService"
+import React, { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+import { toast } from "react-toastify";
+import { projectService } from "@/services/api/projectService";
+import { taskService } from "@/services/api/taskService";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import Sidebar from "@/components/organisms/Sidebar";
+import MobileSidebar from "@/components/organisms/MobileSidebar";
+import CreateProjectModal from "@/components/molecules/CreateProjectModal";
+import Loading from "@/components/ui/Loading";
 
 const Layout = () => {
   const [projects, setProjects] = useState([])
@@ -99,7 +101,7 @@ const Layout = () => {
         onClose={() => setIsMobileSidebarOpen(false)}
         projects={projects}
         taskCounts={taskCounts}
-        onCreateProject={openCreateProjectModal}
+onCreateProject={handleCreateProject}
       />
 
       {/* Main Content */}
@@ -131,7 +133,7 @@ const Layout = () => {
         {/* Page Content */}
         <div className="flex-1 overflow-auto">
           <main className="container mx-auto px-4 py-6 lg:px-8 lg:py-8 max-w-7xl">
-            <Outlet context={{ 
+<Outlet context={{ 
               projects, 
               tasks, 
               taskCounts,
@@ -157,90 +159,5 @@ const Layout = () => {
 }
 
 // Create Project Modal Component (similar to the one in Sidebar)
-const CreateProjectModal = ({ isOpen, onClose, onCreateProject }) => {
-  const [name, setName] = useState("")
-  const [selectedColor, setSelectedColor] = useState("#6366f1")
-  
-  const colorOptions = [
-    "#6366f1", "#8b5cf6", "#10b981", "#f59e0b", 
-    "#ef4444", "#3b82f6", "#f97316", "#84cc16",
-    "#06b6d4", "#ec4899", "#64748b", "#7c3aed"
-  ]
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (name.trim()) {
-      onCreateProject({
-        name: name.trim(),
-        color: selectedColor
-      })
-      setName("")
-      setSelectedColor("#6366f1")
-      onClose()
-    }
-  }
-
-  if (!isOpen) return null
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-2xl">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold text-slate-900">Create New Project</h2>
-          <Button variant="ghost" size="sm" onClick={onClose}>
-            <ApperIcon name="X" size={18} />
-          </Button>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Project Name
-            </label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Enter project name"
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              autoFocus
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-3">
-              Project Color
-            </label>
-            <div className="grid grid-cols-6 gap-3">
-              {colorOptions.map((color) => (
-                <button
-                  key={color}
-                  type="button"
-                  onClick={() => setSelectedColor(color)}
-                  className={`w-8 h-8 rounded-full transition-all duration-200 ${
-                    selectedColor === color 
-                      ? 'ring-2 ring-offset-2 ring-slate-400 scale-110' 
-                      : 'hover:scale-105'
-                  }`}
-                  style={{ backgroundColor: color }}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="flex justify-end gap-3 pt-4">
-            <Button type="button" variant="secondary" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button type="submit" disabled={!name.trim()}>
-              <ApperIcon name="Plus" size={16} className="mr-2" />
-              Create Project
-            </Button>
-          </div>
-        </form>
-      </div>
-    </div>
-  )
-}
 
 export default Layout
