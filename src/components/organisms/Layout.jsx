@@ -7,17 +7,14 @@ import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Sidebar from "@/components/organisms/Sidebar";
 import MobileSidebar from "@/components/organisms/MobileSidebar";
-import CreateProjectModal from "@/components/molecules/CreateProjectModal";
 import Loading from "@/components/ui/Loading";
-
 const Layout = () => {
   const [projects, setProjects] = useState([])
   const [tasks, setTasks] = useState([])
   const [taskCounts, setTaskCounts] = useState({})
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
+const [error, setError] = useState("")
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
-  const [isCreateProjectModalOpen, setIsCreateProjectModalOpen] = useState(false)
 
   // Load initial data
   useEffect(() => {
@@ -59,18 +56,13 @@ const Layout = () => {
 
   const handleCreateProject = async (projectData) => {
     try {
-      const newProject = await projectService.create(projectData)
+const newProject = await projectService.create(projectData)
       setProjects(prev => [...prev, newProject])
       toast.success("Project created successfully!")
-      setIsCreateProjectModalOpen(false)
     } catch (err) {
       toast.error("Failed to create project")
       console.error("Error creating project:", err)
     }
-  }
-
-  const openCreateProjectModal = () => {
-    setIsCreateProjectModalOpen(true)
   }
 
   if (loading) {
@@ -143,21 +135,8 @@ onCreateProject={handleCreateProject}
               loadData
             }} />
           </main>
-        </div>
+</div>
       </div>
-
-      {/* Create Project Modal */}
-      {isCreateProjectModalOpen && (
-        <CreateProjectModal
-          isOpen={isCreateProjectModalOpen}
-          onClose={() => setIsCreateProjectModalOpen(false)}
-          onCreateProject={handleCreateProject}
-        />
-      )}
     </div>
   )
 }
-
-// Create Project Modal Component (similar to the one in Sidebar)
-
-export default Layout
