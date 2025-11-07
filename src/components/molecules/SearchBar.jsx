@@ -33,11 +33,12 @@ const SearchBar = ({ onSearch, placeholder = "Search tasks...", className }) => 
           size={18} 
           className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" 
         />
-        <Input
+<Input
           type="text"
           placeholder={placeholder}
           value={query}
           onChange={handleInputChange}
+          onKeyPress={(e) => e.key === 'Enter' && onSearch && onSearch(query)}
           className="pl-10 pr-4"
         />
       </div>
