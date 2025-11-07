@@ -1,0 +1,112 @@
+[
+  {
+    "Id": 1,
+    "projectId": 1,
+    "title": "Create wireframes for homepage",
+    "description": "Design low-fidelity wireframes for the new homepage layout focusing on user experience and conversion optimization",
+    "dueDate": "2024-03-15T23:59:59Z",
+    "priority": "high",
+    "isCompleted": false,
+    "completedAt": null,
+    "createdAt": "2024-01-16T10:30:00Z"
+  },
+  {
+    "Id": 2,
+    "projectId": 1,
+    "title": "Design system documentation",
+    "description": "Document all design tokens, components, and usage guidelines for the new design system",
+    "dueDate": "2024-03-20T23:59:59Z",
+    "priority": "medium",
+    "isCompleted": true,
+    "completedAt": "2024-02-28T14:20:00Z",
+    "createdAt": "2024-01-16T11:00:00Z"
+  },
+  {
+    "Id": 3,
+    "projectId": 1,
+    "title": "User testing sessions",
+    "description": "Conduct usability testing with 8 participants to validate new design concepts",
+    "dueDate": "2024-03-25T23:59:59Z",
+    "priority": "high",
+    "isCompleted": false,
+    "completedAt": null,
+    "createdAt": "2024-01-17T09:15:00Z"
+  },
+  {
+    "Id": 4,
+    "projectId": 2,
+    "title": "Set up React Native project",
+    "description": "Initialize new React Native project with navigation, state management, and basic project structure",
+    "dueDate": "2024-03-10T23:59:59Z",
+    "priority": "high",
+    "isCompleted": true,
+    "completedAt": "2024-02-15T16:45:00Z",
+    "createdAt": "2024-01-21T10:00:00Z"
+  },
+  {
+    "Id": 5,
+    "projectId": 2,
+    "title": "Implement authentication flow",
+    "description": "Create login, signup, and password reset screens with proper validation and error handling",
+    "dueDate": "2024-03-18T23:59:59Z",
+    "priority": "medium",
+    "isCompleted": false,
+    "completedAt": null,
+    "createdAt": "2024-01-21T11:30:00Z"
+  },
+  {
+    "Id": 6,
+    "projectId": 2,
+    "title": "Design app icons and splash screen",
+    "description": "Create app icons for iOS and Android platforms, plus animated splash screen",
+    "dueDate": "2024-03-12T23:59:59Z",
+    "priority": "low",
+    "isCompleted": false,
+    "completedAt": null,
+    "createdAt": "2024-01-22T14:15:00Z"
+  },
+  {
+    "Id": 7,
+    "projectId": 3,
+    "title": "Content strategy planning",
+    "description": "Develop content calendar and messaging strategy for Q2 marketing initiatives",
+    "dueDate": "2024-03-08T23:59:59Z",
+    "priority": "high",
+    "isCompleted": false,
+    "completedAt": null,
+    "createdAt": "2024-02-02T13:00:00Z"
+  },
+  {
+    "Id": 8,
+    "projectId": 3,
+    "title": "Social media graphics",
+    "description": "Design 20 social media post templates for various platforms and campaign themes",
+    "dueDate": "2024-03-14T23:59:59Z",
+    "priority": "medium",
+    "isCompleted": false,
+    "completedAt": null,
+    "createdAt": "2024-02-02T15:30:00Z"
+  },
+  {
+    "Id": 9,
+    "projectId": 4,
+    "title": "Database schema analysis",
+    "description": "Analyze current database structure and identify optimization opportunities",
+    "dueDate": "2024-03-05T23:59:59Z",
+    "priority": "high",
+    "isCompleted": true,
+    "completedAt": "2024-02-25T10:30:00Z",
+    "createdAt": "2024-02-11T09:00:00Z"
+  },
+  {
+    "Id": 10,
+    "projectId": 4,
+    "title": "Migration scripts development",
+    "description": "Write and test data migration scripts for moving to new database structure",
+    "dueDate": "2024-03-22T23:59:59Z",
+    "priority": "high",
+    "isCompleted": false,
+    "completedAt": null,
+    "createdAt": "2024-02-11T10:15:00Z"
+  }
+]
